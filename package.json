@@ -1,0 +1,39 @@
+{
+  "name": "l3c_v4",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "@commitlint/config-conventional": "8.1.0",
+    "eslint": "6.3.0",
+    "husky": "3.0.5",
+    "lint-staged": "9.2.5",
+    "prettier": "1.18.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:nofail": "echo \"Error: no test specified\"",
+    "check-format": "prettier --check \"**/*.js\"",
+    "prettier": "prettier --write \"**/*.js\"",
+    "lint": "eslint ."
+  },
+  "husky": {
+    "pre-commit": "lint-staged",
+    "pre-push": "npm run test:nofail && npm run lint",
+    "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+  },
+  "lint-staged": {
+    "*.js": "npm run check-format"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sufiane/L3C_V4.git"
+  },
+  "author": "Sufiane Souissi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sufiane/L3C_V4/issues"
+  },
+  "homepage": "https://github.com/Sufiane/L3C_V4#readme"
+}
