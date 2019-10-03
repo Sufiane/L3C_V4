@@ -3,15 +3,27 @@
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "body-parser": "1.19.0",
+    "dotenv": "8.1.0",
+    "express": "4.17.1",
+    "express-graphql": "0.9.0",
+    "graphql": "14.5.4",
+    "graphql-iso-date": "3.6.1",
+    "graphql-tools": "4.0.5",
+    "joi": "14.3.1",
+    "mongodb": "3.3.2"
+  },
   "devDependencies": {
     "@commitlint/config-conventional": "8.1.0",
     "eslint": "6.3.0",
     "husky": "3.0.5",
     "lint-staged": "9.2.5",
+    "nodemon": "1.19.2",
     "prettier": "1.18.2"
   },
   "scripts": {
+    "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "test:nofail": "echo \"Error: no test specified\"",
     "check-format": "prettier --check \"**/*.js\"",
