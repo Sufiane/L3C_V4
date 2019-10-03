@@ -87,8 +87,6 @@ const start = async () => {
   	suggestions: [Suggestion]!
   }
 `
-	const schema = buildSchema(type)
-
 	// TODO: investigate this more (i guess its the root resolver)
 	const resolvers = {
 		Query: {
