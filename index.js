@@ -10,24 +10,13 @@ const MongoClient = require('mongodb').MongoClient
 
 const logger = require('./local_logger')
 const types = require('./types')
+const resolvers = require('./resolvers')
 
 const app = express()
 
 const start = async () => {
 	const dbClient = await MongoClient.connect(process.env.MONGO_URI, { useNewUrlParser: true })
 	const db = dbClient.db('L3C_V4')
-
-	const resolvers = {
-		Query: {
-			actor: () => 'get an actor',
-			movie: async (parent, { movieTitle: title }, { moviesCollection }) => moviesCollection.findOne({ title }),
-			suggestion: (parent, { date: release }, { suggestionsCollection }) => suggestionsCollection.findOne({ release }),
-		},
-		Mutation: {
-			movies: (parent, args, { moviesCollection }) => moviesCollection.find().toArray(),
-			suggestions: (parent, args, { suggestionsCollection }) => suggestionsCollection.find().toArray(),
-		},
-	}
 
 	const executableSchema = makeExecutableSchema({ typeDefs: types, resolvers })
 
