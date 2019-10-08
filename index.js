@@ -9,85 +9,13 @@ const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
 
 const logger = require('./local_logger')
+const types = require('./types')
 
 const app = express()
-//const dbClient = new MongoClient(process.env.MONGO_URI, { useNewUrlParser: true });
 
 const start = async () => {
 	const dbClient = await MongoClient.connect(process.env.MONGO_URI, { useNewUrlParser: true })
 	const db = dbClient.db('L3C_V4')
-
-	// TODO: move this to a separate file
-	const type = `
-
-  scalar Date
-
-  enum Genre {
-    Action
-    Adventure
-    Biographical
-    Catastrophic
-    Comedic
-    Drama
-    Spy
-    Fantastic
-    Historical
-    Horror
-    Peplum
-    Polar
-    Scy_fy
-    Thriller
-    Western
-  }
-  
-  type Identity {
-    name: String!
-    dateOfBirth: Date
-    country: String
-  }
-
-  type Actor {
-    identity: Identity!
-    appearsIn: [String]! # replace String by Movie type
-  }
-  
-  type Director {
-    identity: Identity!
-    directed: [String]! # replace String by Movie type
-  }
-  
-  type Movie {
-  	title: String!
-    director: Director!
-    actors: [Actor!]!
-    release: Date!
-    synopsis: String!
-    genres: [Genre!]!
-    note: Int
-    trailer: String
-    length: Int
-    poster: String
-  }
-
-  type Suggestion {
-    created: Date!
-    release: Date!
-    movie: Movie!
-    reason: String!
-  }
-
-
-  type Query {
-    actor: Actor
-    movie(movieTitle: String!): Movie
-    suggestion(date: Date!): Suggestion
-  }
-  
-  type Mutation {
-  	movies: [Movie]!
-  	suggestions: [Suggestion]!
-  }
-`
 
 	const resolvers = {
 		Query: {
@@ -101,7 +29,7 @@ const start = async () => {
 		},
 	}
 
-	const executableSchema = makeExecutableSchema({ typeDefs: type, resolvers })
+	const executableSchema = makeExecutableSchema({ typeDefs: types, resolvers })
 
 	app.use(
 		'/graphql',
