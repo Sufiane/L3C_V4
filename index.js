@@ -3,11 +3,12 @@
 require('dotenv').config()
 
 const express = require('express')
-const { buildSchema } = require('graphql')
 const { makeExecutableSchema } = require('graphql-tools')
 const expressGraphql = require('express-graphql')
 const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
+
+const logger = require('./local_logger')
 
 const app = express()
 //const dbClient = new MongoClient(process.env.MONGO_URI, { useNewUrlParser: true });
@@ -87,7 +88,7 @@ const start = async () => {
   	suggestions: [Suggestion]!
   }
 `
-	// TODO: investigate this more (i guess its the root resolver)
+
 	const resolvers = {
 		Query: {
 			actor: () => 'get an actor',
@@ -117,17 +118,17 @@ const start = async () => {
 }
 
 app.listen(7777, () => {
-	console.log('[START] L3C_V4 now up at localhost:7777/graphql')
+	logger.infoMessageStyle('[START] L3C_V4 now up at localhost:7777/graphql')
 })
 
 process.on('unhandledRejection', err => {
-	console.log('ERROOOOOOOOOOOOOOOOOOOR', err)
+	logger.errorMessageStyle('UnhandledRejection error', err)
 
 	process.exit(0)
 })
 
 start().catch(err => {
-	console.log('ERROR ON START', err)
+	logger.errorMessageStyle('Error when starting project', err)
 
 	process.exit(0)
 })
