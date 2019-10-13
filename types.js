@@ -56,15 +56,44 @@ type Suggestion {
 	reason: String!
 }
 
-
 type Query {
 	actor: Actor
+	upcomingMovies: [Movie]!
 	movie(movieTitle: String!): Movie
 	suggestion(date: Date!): Suggestion
+	movies: [Movie]!
+	suggestions: [Suggestion]!
+}
+
+input DirectorInput {
+	name: String!
+}
+
+input ActorInput {
+	name: String!
+}
+
+input MovieInputType {
+	title: String!
+	director: DirectorInput!
+	actors: [ActorInput!]!
+	release: Date!
+	synopsis: String!
+	genres: [Genre!]!
+	note: Int
+	trailer: String
+	length: Int
+	poster: String
+}
+
+input SuggestionInputType {
+	release: Date!
+	movieTitle: String!
+	reason: String!
 }
 
 type Mutation {
-	movies: [Movie]!
-	suggestions: [Suggestion]!
+	addMovie(movieInput: MovieInputType): Movie!
+	addSuggestion(suggestionInput: SuggestionInputType): Suggestion!
 }
 `

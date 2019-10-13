@@ -14,8 +14,10 @@ const resolvers = require('./resolvers')
 
 const app = express()
 
+const dbClient = new MongoClient(process.env.MONGO_URI, { useNewUrlParser: true });
+
 const start = async () => {
-	const dbClient = await MongoClient.connect(process.env.MONGO_URI, { useNewUrlParser: true })
+	await dbClient.connect()
 	const db = dbClient.db('L3C_V4')
 
 	const executableSchema = makeExecutableSchema({ typeDefs: types, resolvers })
@@ -43,6 +45,9 @@ process.on('unhandledRejection', err => {
 
 	process.exit(0)
 })
+
+process.on('SIGINT', () => dbClient.close());
+process.on('SIGTERM', () => dbClient.close());
 
 start().catch(err => {
 	logger.errorMessageStyle('Error when starting project', err)
