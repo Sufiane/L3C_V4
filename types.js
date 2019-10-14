@@ -2,6 +2,13 @@ module.exports = `
 
 scalar Date
 
+enum MovieType {
+	upcoming
+	top_rated
+	now_playing
+	popular
+}
+
 enum Genre {
 	Action
 	Adventure
@@ -95,5 +102,6 @@ input SuggestionInputType {
 type Mutation {
 	addMovie(movieInput: MovieInputType): Movie!
 	addSuggestion(suggestionInput: SuggestionInputType): Suggestion!
+	loadMovies(movieType: MovieType!): [Movie]!
 }
 `
